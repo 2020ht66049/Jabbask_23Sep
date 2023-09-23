@@ -1,0 +1,83 @@
+Umesh, 12+yrs, Devops
+
+Name, qualification, why devops? any idea about programming?
+
+
+Agenda:
+======
+1) What is Devops?
+2) Why we need Devops?
+3) Traditional system, SDLC
+
+Patrick Dubois is the father of Devops, and he defined devops as improvement in current system
+
+Lets understand a current system, and scope of imprevment
+
+Application: spring pet clinic[dog] > https://github.com/spring-projects/spring-petclinic
+
+To design this application we need to follow SDLC[software development life cycle]
+
+Plan: Which alogorithm and which programing language we are going to use?
+      Options: C, C++, Java, .Net, Go, Python.....
+
+Code: Here, you would be converting your thought[spring pet clinic] into  codding
+
+Build: Any website has 2 things 1) Business logic[it's your idea], non business logic[Images/quotes], We combine business logicn with non business logic.
+
+Example: Calculator[a+b, a-b, a*b, a/b] > Business logic
+         Battry, screen, outer body[Non business logic]
+
+Test: We would be testing the accuracy of our application.
+      unit testing, interation tessting, system testing, regression testing, user acceptance testing
+
+CMMI: Level 5 > CMMI Level 5 indicates that the organization has achieved all the specific goals defined in maturity levels 2, 3, and 4. It focuses on optimizing business processes through adopting incremental and innovative technological improvements.
+
+Release: When we deployment of code other that production it's known as release
+
+Deploy: When we deployment of code in production it's known as deploy
+
+Operate: Day to maintenances
+
+Moniotor: Keeping eye on system
+
+Now, as a improvemnt you need improve on below part:
+1) Cost[cost should be low]
+2) Time to market[minimal]
+3) Quality[should be high]
+
+Development phase: Plan code Build test> Making application available on local
+file:///C:/Users/juhi3/Desktop/Ganesh%20Kripa%20Devops%20Engineer/Viva/E-learning%20Portal/E-learning%20Portal%20version2/index.html
+
+Operation phase: Management of user and application
+
+if some one deposite money
+balance = balance + deposite
+
+int balance, deposite
+balance = balance + deposite
+
+lets my current balance is 50000, and someone deposited 50000, so my balance should be 1 lakh, but it showing like 34465
+
+Range of integer[0 to 65535]
+
+long balance, deposite [2147.......12 to 13 digit]
+balance = balance + deposite
+
+
+Devops Engineer responsibility:
+
+1) Reducing the communication gap between Development and Operation team.
+2) Reducing the cost
+3) Improving qulaity
+4) Reducing time to market
+
+
+Next step:
+1) Understanding Development mindset.[Agile]
+2) Understanding Operation mindset.[Application support model]
+
+
+Homework:
+1) Design thinking: https://www.youtube.com/watch?v=_r0VX-aU_T8
+2) What is devops as per patrick Deboise: https://www.youtube.com/watch?v=5VqXqtL0xQI
+
