@@ -1,0 +1,59 @@
+Developer mindset
+==================
+
+In SDLC we have 2 Phases:
+1) Development phase: Plan, code, build and test.
+2) Operation phase: Relase, Deploy, operate and Monitor.
+
+
+Developer is thinking 10 yrs ahead.[ATM: Automtaic taller machine]. and Developer uses hit and trial mechanism.
+
+Exacize: Suppose you need to instruct me to draw tiger.
+Conclusion: Even though we have seen tiger multiple time, it's difficult for us to tell the step to draw the Tiger, but developers are very intellignent they are on someone's idea, and making it implement as per requirement.
+
+In within Devlopment team we have sub team:
+1) Business Analyst team: Owner of project, and they are responsible for business
+2) Project management and software architect team: Algorithin, languages and high level system design
+3) Developer: doing codding for requirement
+
+Example: I(Umesh), want to create spring pet clinic, and I am giving my website development task to IBM.
+
+Business Analyst Role:
+======================
+Tender: I want to implement spring pet clinic, and max budget is 10000$
+IBM: 12000$
+Wipro: 13000$
+Accenture: 15000$
+Siemens: 11000$
+
+Now, lets say I have opted siemens, so now thier should be legal agreement between me and Siemens
+
+Sofware architect role:
+======================= 
+Software architech we decide all the techinal things of project like which language, which algorithm, which cloud, which datacenter.....
+
+Design Engineer(Devloper)
+========================
+He would be doing the codding.
+
+Their are some many problem within Development team, to solve that problem we have agile principles-
+
+Link: https://www.agilealliance.org/agile101/12-principles-behind-the-agile-manifesto/
+
+1  2  3  4  5  6  9 10 11 12
+
+
+Sustanable Development
+======================
+Business model should support downfall and business growth without impacting anything.
+
+
+Tomorrow:
+=========
+Microservices
+Ops mindset
+
+
+NextDay
+======
+Devops Actual defination, and tool chains
