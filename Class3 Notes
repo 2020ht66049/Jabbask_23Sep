@@ -1,0 +1,96 @@
+Last class discussion: Developer mindset
+> Developer is having experimental mindset
+
+Today's Discussion Operational mindset:
+> I will do same mistake multipletimes to make sure it's a mistake likewise Ops team test same code im multiple way to makesure nothing in breaking.
+
+CMMI level -5
+
+
+Devlopment Environment    Test Environment      Stage Environment      Production Environment        DR Environment
+
+Let say today Developer is doing a code change, so he needs to wait for 5-6 day to get feedback from user, because after successful runs in all the environment will lead to push code in production.
+
+1) Wasting time for Developer.
+2) wasting Cost
+3) We are achieving environment stability
+
+When Developers and operations are talking
+
+Frustration: Devs are from Mars[Planet], Ops are from Venus[planet]
+
+Because of this communication gap, company is loosing it's value. to sort out this communication Devops given 5 principles-
+
+1) Treat Ops as first-class citizens from the point of view of requirements.
+Adding requirements to a system from Ops may require some architectural
+modification. In particular, the Ops requirements are likely to be in the
+area of logging, monitoring, and information to support incident handling.
+These requirements will be like other requirements for modifications to a
+system: possibly requiring some minor modifications to the architecture
+but, typically, not drastic modifications.
+
+
+2) Make Dev more responsible for relevant incident handling. By itself, this
+change is just a process change and should require no architectural
+modifications. However, just as with the previous category, once Dev
+becomes aware of the requirements for incident handling, some
+architectural modifications may result.
+
+3) Enforce deployment process used by all, including Dev and Ops
+personnel. In general, when a process becomes enforced, some individuals
+may be required to change their normal operating procedures and,
+possibly, the structure of the systems on which they work. One point where
+a deployment process could be enforced is in the initiation phase of each
+system. Each system, when it is initialized, verifies its pedigree. That is, it
+arrived at execution through a series of steps, each of which can be
+checked to have occurred. Furthermore, the systems on which it depends
+(e.g., operating systems or middleware) also have verifiable pedigrees.
+# Process should be uniform for Everyone.
+
+4)  Use continuous deployment. Continuous deployment is the practice that
+leads to the most far-reaching architectural modifications. On the one
+hand, an organization can introduce continuous deployment practices with
+no major architectural changes
+
+5) Develop infrastructure code with the same set of practices as application
+code. These practices will not affect the application code but may affect
+the architecture of the infrastructure code.
+
+
+Devops tools:
+============
+
+We can achive best environment if we follow Devops 5 principles to follow this 5 principles we have set of DevOps tool that increase efficiency in our work
+
+> Docker
+> Kubernetes
+> Terraform
+> helm
+> Packer
+> Ansible
+> GIT
+> Jenkins
+> Maven
+> Splunk/ ELK
+
+Notes for the class:1) I will share notes along with image.
+
+2) If you have any doubt, please stop me their only, we cann't proceed with doubt.
+
+3) Practice lab is located at : https://killercoda.com/playgrounds/scenario/ubuntu
+
+4) For installing Devops tool it required lots of steps to follow. I want to install kubernetes[It will take 20-30 minutes for me minimum]
+
+Certificate: I will provide 20+ Market recognized Devops certificate at free of COST. and IBM will validate your certificate.
+===========
+
+Cloud Certificate: AWS, Google and Azure
+Networking certificate: CISCO
+
+IBM certification policy: IBM comeup with free certificate for all.
+
+
+1) https://info.credly.com/
+2) https://cognitiveclass.ai/
+
+https://github.com/2020ht66049/Devops_Engineering
