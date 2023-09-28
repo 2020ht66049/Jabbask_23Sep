@@ -1,0 +1,104 @@
+Problem statement:
+1) Scalling up and scalling down the application; Sustable application development Model; capacity planning of application
+2) Host Deployment
+3) Golden image
+4) Enterprise software vs free version vs community version
+5) Software charges
+6) Docker 5000 ft overview
+
+
+
+So, in the last class we talked about application Spring pet clinic. lets suppose to deploy sprint pet clinic application we need 4GB RAM, and 4CPU, and it can server upto 400 users.
+
+Now my requirement is I need to support 2000 users, then we need to scale up the server.
+Now my requirement is 10000 users, so I would be running 25 server
+Now my requirement is 20000 user, so I would be needed 50 server
+Now my requirement is 500 users, so I would be needed 2 server
+
+In summary, I am scalling up and scalling down the application.
+
+Scalling up: Adding more servers
+Scalling down: removing server
+
+This is acctivity I need to do every minute. If application is designed in such in a way that it will support scalling up and scalling down then it's known sustanable application development model.
+
+Host Deployment
+===============
+In Host deployment Developer will share step to download and install the application along with pre-requisites
+
+Petclinic is a Spring Boot application built using Maven or Gradle. You can build a jar file and run it from the command line (it should work just as well with Java 17 or newer):
+
+Link: https://github.com/spring-projects/spring-petclinic
+
+git clone https://github.com/spring-projects/spring-petclinic.git
+cd spring-petclinic
+./mvnw package
+java -jar target/*.jar
+
+You can then access petclinic at http://localhost:8080/
+
+How to check java is installed or not?
+=====================================
+Java --version
+
+root@ip-172-31-31-161:~# java --version
+Command 'java' not found, but can be installed with:
+apt install openjdk-11-jre-headless  # version 11.0.18+10-0ubuntu1~22.04, or
+apt install default-jre              # version 2:1.11-72build2
+apt install openjdk-17-jre-headless  # version 17.0.6+10-0ubuntu1~22.04
+apt install openjdk-18-jre-headless  # version 18.0.2+9-2~22.04
+apt install openjdk-19-jre-headless  # version 19.0.2+7-0ubuntu3~22.04
+apt install openjdk-8-jre-headless   # version 8u362-ga-0ubuntu1~22.04
+
+root@ip-172-31-31-161:~# apt install openjdk-17-jre-headless
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package openjdk-17-jre-headless
+
+Solution: apt-get update
+
+[selecting the data, shift + insert; after that your command will come in terminal then you need to add enter]
+
+Do you want to continue? [Y/n] > We need to give yes| Y | y
+
+Here, we have prereqisites to install java before we install application. and once I am done with activity I need to uninstall java
+
+400 users| 1 server
+2000 users | 5 server(Adding 4 more server, so I need to do installation of java 4 times)
+300 user | 1(I need to remove 4 server), so I need to unstall the java 4 times.
+
+
+to solve this problem we have something called golden image
+
+Golden image:
+=============
+Golden image is provisioned[Provision: installing required software] image that has all the needed software, and it avaid problem of installion and uninstalltion.
+
+Lets say my requirement to have java17 and docker install before we install application
+
+1) I have taken 1 ubuntu box, and installed java17 and docker there. and taken image from it
+
+Currently creating AMI ami-05e5487e4a9805c3f from instance i-0d8690fc7268c5f4e. Check that the AMI status is 'Available' before deleting the instance or carrying out other actions related to this AMI.
+
+Enterprise software vs free version vs community version
+=========================================================
+Enterprise means paid version
+Free trial means free version to promote product
+community version means so software that maintained by some group of ppl
+
+During our training we would be using free version only.
+
+Software pricing: it's calculator that shows the price to use software
+=================
+
+Docker:
+======
+We are packing application and dependacy into using them
+
+
+Baremetal: Create box + Install softwares + install application
+Golden image: Create box + install application
+Docker: just run image[just create box]
+
+Ubuntu Box + java17 + Application > creating image
