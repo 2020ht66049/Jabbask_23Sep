@@ -1,0 +1,116 @@
+Waiting for resource to join
+
+Today's topic: 
+Docker image defination
+Docker image creation
+
+> In golden image we are creating environment, and in top of that environment we are installing the application.
+
+> Software[Collection of program that satisfy user requirement, sometimes refers as application as well, installing putty, Nodepad++] vs Application[it's very generic word that can use anywhere]
+
+How to install docker:
+======================
+To install docker we multiple way like:
+
+1) https://docs.docker.com/engine/install/ubuntu/
+
+2) https://get.docker.com/
+
+3) By package manager
+     apt install docker.io
+
+How to read docker version > docker --version
+<Major release>.<Minor release>.<fix pack>
+
+
+Docker image defination
+=======================
+Packaging application and it's dependany to run it anywhere we create docker image.
+
+
+How to create docker image:
+===========================
+1) To create docker image we need to create build-context where we would be writing the instruction to create docker image[refered as dockerfile]
+       touch dockerfile
+
+2) The first line of docker image should be 
+       from <OS> Example: from ubuntu or from centos or from alpine
+
+3) remaining commands should have below syntax
+       cmd linux command
+
+Example: Create a docker image to print hello world in terminal
+       from ubuntu
+       cmd echo "Hello world"
+
+4) To create docker image run below command
+        docker build -t <imagename> .
+
+5) To run docker image
+        docker run <image name>
+        from ubuntu/centos/alpine
+        cmd echo "Hello world"
+
+6) to install any software use run statement in front of linux command
+Exaple: Create a docker image to install git and java 17 in ubuntu OS, and print message that software are installed.
+       
+        vi dockerfile, and keep below instruction over their.
+        
+        from ubuntu
+        run apt-get update
+        run apt install openjdk-17-jre-headless -y
+        run apt-get update
+        run apt install git-all -y    
+        cmd echo "software's are installed"
+
+
+7) To change directory we are using cd command. in dockerfile it would be 
+        run cd directory > workdir directory
+
+# Create dockerfile for spring per clinic application
+        from ubuntu
+        run apt-get update
+        run apt install openjdk-17-jre-headless -y
+        run apt-get update
+        run apt install git -y  
+        run git clone https://github.com/spring-projects/spring-petclinic.git
+        workdir spring-petclinic
+        run ./mvnw package
+        cmd java -jar target/*.jar
+
+docker run -p 8080:8080 -idt image1
+
+
+Homework: To to google deployment steps for opensource applications and create dockerfile from it.
+       1) https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-ubuntu-18-04
+       2) https://openmrs.org/
+       3) https://www.digitalocean.com/community/tutorials/install-tomcat-on-linux
+
+
+[Saturday's class]
+1) Different instructions to create dockerimage
+2) How to run container
+3) Docker cheatsheet
+
+[Sunday's class]
+Docker compose
+Docker networking
+multistage dockerbuild
+docker on windows
+
+Monday[Homework for 5 certificates]
+
+
+Appox 90 minue long
+
+
+
+
+
+
+
+
+
+
+
+# in from ubuntu statement[first line of docker image] we are using ubuntu OS which is minimal OS, so we need to install required software as well
