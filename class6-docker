@@ -1,0 +1,257 @@
+Today Agenda
+============
+1) Docker file instruction
+2) Docker architechture
+3) Layering in docker
+4) i d t p options
+5) docker cheatsheat
+
+Docker file instruction
+========================
+FROM: it is used to set the base image like ubuntu, centos...
+RUN: Wheneever we are installing any software we are using RUN statement
+CMD: whenever we want to launch the application.
+WORKDIR: it's about changing directory
+ENTRYPOINT: It's like CMD but it's argument can't be alter
+COPY: When we want to COPY anything from host to container then we would be using COPY(COPY Source DESTINATION)
+ADD: When we want to COPY anything from web to container then we would be using ADD(ADD Source DESTINATION)
+USER: be default user in docker is root, but if you want to change it you can do it(USER jenkins)
+EXPOSE: it is to open container port(EXPOSE port_number)
+VOLUME: Suppose, I want to mount /home/olu/storage to container then MOUNT /home/olu/storage
+
+vi dockerfile
+    FROM ubuntu
+    COPY readme.md .
+    CMD ["google.com"]
+
+vi dockerfile
+    FROM ubuntu
+    ADD https://github.com/2020ht66049/Devops_Ron . // RUN git clone 
+    CMD ["google.com"]
+
+
+Above instruction will copy readme.md file into container                    
+
+Rule1) When we have multiple CMD instruction then last CMD would be executed.
+example
+vi dockerfile
+
+FROM ubuntu
+CMD echo "Hello"
+CMD echo "Hi"
+CMD echo "bye"
+
+Output: Bye
+
+
+Rule2) We can override the CMD instruction in command line argument
+[node1] (local) root@192.168.0.28 ~
+$ docker run image3 echo "Olu"
+output: Olu
+
+Rule3) CMD instruction are good, but their containt can be altered, so we have entrypoint where containt is alway fix.
+vi dockerfile
+
+FROM ubuntu
+ENTRYPOINT echo "Hello"
+ENTRYPOINTecho "Hi"
+ENTRYPOINT echo "bye"
+
+output: bye
+
+Rule4) We can't override the ENTRYPOINT instruction by command line argument
+[node1] (local) root@192.168.0.28 ~
+$ docker run image3 echo "Olu"
+output: bye
+
+When to use entrypoint and when to use CMD
+==========================================
+When we have 2 component application and argument
+ping[application] google.com[argument]
+
+when Application is fix, but argument can be change then we would be using combinitaion of ENTRYPOINT and CMD
+
+Suppose, I want to create a image by which we can test the connectivity like
+
+ping google.come
+ping yahoo.com
+ping localhsot
+ping ip/hostname
+
+vi dockerfile
+
+FROM ubuntu
+CMD ping google.com
+
+This file will create dockerimage, but docker image would not working, and we are getting error like ping not found.
+$ docker run image5
+/bin/sh: 1: ping: not found
+
+
+Lets fix this
+
+
+vi dockerfile
+
+FROM ubuntu
+RUN apt-get update
+RUN apt install iputils-ping
+CMD ping google.com
+
+
+Whenver we are installing any software, we need to give -y option otherwise it would not working
+
+#0 2.206 Do you want to continue? [Y/n] Abort.
+------
+dockerfile:3
+--------------------
+   1 |     FROM ubuntu
+   2 |     RUN apt-get update
+   3 | >>> RUN apt install iputils-ping
+   4 |     CMD ping google.com
+   5 |     
+--------------------
+ERROR: failed to solve: process "/bin/sh -c apt install iputils-ping" did not complete successfully: exit code: 1
+
+vi dockerfile
+
+FROM ubuntu
+RUN apt-get update
+RUN apt install iputils-ping -y
+CMD ping google.com
+
+vi dockerfile
+
+FROM ubuntu
+RUN apt-get update
+RUN apt install iputils-ping -y
+ENTRPOINT ping 
+CMD google.com
+
+
+attached mode vs detached mode
+==============================
+# When we are running container it would be running in the attached mode.[i.e. output would be printing in the terminal]
+
+# If we don't want output in the terminal the we would be specifying -d command
+
+$ cat dockerfile
+FROM ubuntu
+RUN apt-get update
+RUN apt install iputils-ping -y
+ENTRYPOINT ["ping"]
+CMD ["google.com"]
+
+
+$ docker run image3 yahoo.com
+PING yahoo.com (98.137.11.164) 56(84) bytes of data.
+64 bytes from media-router-fp73.prod.media.vip.gq1.yahoo.com (98.137.11.164): icmp_seq=1 ttl=43 time=63.3 ms
+64 bytes from media-router-fp73.prod.media.vip.gq1.yahoo.com (98.137.11.164): icmp_seq=2 ttl=43 time=63.4 ms
+64 bytes from media-router-fp73.prod.media.vip.gq1.yahoo.com (98.137.11.164): icmp_seq=3 ttl=42 time=63.6 ms
+64 bytes from media-router-fp73.prod.media.vip.gq1.yahoo.com (98.137.11.164): icmp_seq=4 ttl=42 time=63.6 ms
+^C
+--- yahoo.com ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 63.310/63.468/63.626/0.130 ms
+[node1] (local) root@192.168.0.28 ~
+$ docker run image3 google.com
+PING google.com (172.253.122.139) 56(84) bytes of data.
+64 bytes from bh-in-f139.1e100.net (172.253.122.139): icmp_seq=1 ttl=104 time=1.90 ms
+64 bytes from bh-in-f139.1e100.net (172.253.122.139): icmp_seq=2 ttl=104 time=2.03 ms
+64 bytes from bh-in-f139.1e100.net (172.253.122.139): icmp_seq=3 ttl=104 time=1.91 ms
+^C
+--- google.com ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2004ms
+rtt min/avg/max/mdev = 1.903/1.946/2.030/0.059 ms
+[node1] (local) root@192.168.0.28 ~
+$ docker run image3 localhost
+PING localhost (127.0.0.1) 56(84) bytes of data.
+64 bytes from localhost (127.0.0.1): icmp_seq=1 ttl=64 time=0.058 ms
+64 bytes from localhost (127.0.0.1): icmp_seq=2 ttl=64 time=0.053 ms
+^C
+--- localhost ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 999ms
+rtt min/avg/max/mdev = 0.053/0.055/0.058/0.002 ms
+
+
+Layering in docker
+==================
+FROM ubuntu
+
+RUN apt-get update
+RUN apt install iputils-ping -y
+
+RUN apt-get update
+RUN apt install git -y
+
+RUN apt-get update
+RUN apt install openjdk-17-jre-headless -y
+
+CMD "All software's are installed"
+
+Docker push
+===========
+To save image permanently we use docker push.
+
+docker tag local-image:tagname new-repo:tagname
+docker push new-repo:tagname
+
+docker tag image11 2020ht66049/image11:olu
+docker push 2020ht66049/image11:olu
+
+docker tag: it provides standard name for my image
+==========
+$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+image11      latest    6b15d7d1323d   9 seconds ago   200MB
+[node1] (local) root@192.168.0.8 ~
+$ 
+[node1] (local) root@192.168.0.8 ~
+$ docker tag image11 2020ht66049/image11:olu
+[node1] (local) root@192.168.0.8 ~
+$ docker images
+REPOSITORY            TAG       IMAGE ID       CREATED          SIZE
+2020ht66049/image11   olu       6b15d7d1323d   28 seconds ago   200MB
+image11               latest    6b15d7d1323d   28 seconds ago   200MB
+
+
+Docker login: This command is used to login into dockerhub
+============
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: 2020ht66049
+Password: 
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+Dockerhub
+=========
+Docker hub is use for sharing the images. here we have 3 types of images
+1) Offical image: Official owner lanches image
+2) Verified image: it is third party trusted image
+3) Indovisual image: image created by indivisual
+
+URL: hub.docker.com/
+
+Docker architecture: https://www.whizlabs.com/blog/docker-architecture-in-detail/
+===================
+
+In the docker architecture we have 3 components
+1) Docker client
+2) Docker server
+3) Docker image store
+
+Docker preffer to have local communication, so alway it download image from remote to local
+
+Docker cheatsheat: https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwi71I-i5NOBAxUqTGwGHWAjBNkQFnoECAoQAQ&url=https%3A%2F%2Fdocs.docker.com%2Fget-started%2Fdocker_cheatsheet.pdf&usg=AOvVaw0JcpwQBtWjt88-OoOF1oo6&opi=89978449
+
+Tomorrow:
+=========
+--name ; -idt 
+multistage docker build
+Docker compose
+Docker networking
+docker on window's
