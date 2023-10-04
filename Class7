@@ -1,0 +1,216 @@
+
+
+docker tag local-image:tagname new-repo:tagname
+docker push new-repo:tagname
+
+When we are creating image we are getting below two commands-
+docker tag local-image:tagname new-repo:tagname
+docker push new-repo:tagname
+
+docker push 2020ht66049/olu:tagname
+
+docker tag image11 2020ht66049/image11:olu[Repostoryname:username]
+docker push 2020ht66049/image11:olu
+
+Tomorrow:
+=========
+--name ; -idt 
+multistage docker build
+Docker compose
+Docker networking
+docker on window's
+
+When we are creating the container, container will get default name[Noun_verb]. and you you want to give name as per you the use --name in command line argument like below
+
+vi dockerfile
+FROM ubuntu
+cmd echo "Hello-world"
+
+docker build -t image1 .
+
+docker run -idt --name ubuntucontainer image1
+
+ubuntu $ docker run image1
+hello-world
+ubuntu $ docker run image1
+hello-world
+ubuntu $ docker run image1
+hello-world
+ubuntu $ docker container ls
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+ubuntu $ docker container ls -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                      PORTS     NAMES
+23402bc6acee   image1    "/bin/sh -c 'echo he…"   20 seconds ago   Exited (0) 19 seconds ago             infallible_hypatia
+53360342b983   image1    "/bin/sh -c 'echo he…"   23 seconds ago   Exited (0) 22 seconds ago             affectionate_galois
+bd6000bef078   image1    "/bin/sh -c 'echo he…"   26 seconds ago   Exited (0) 25 seconds ago             trusting_bouman
+
+
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS                     PORTS     NAMES
+da1f89a79a6f   image1    "/bin/sh -c 'echo he…"   3 seconds ago   Exited (0) 2 seconds ago             ubuntucontainer
+23402bc6acee   image1    "/bin/sh -c 'echo he…"   2 minutes ago   Exited (0) 2 minutes ago             infallible_hypatia
+53360342b983   image1    "/bin/sh -c 'echo he…"   2 minutes ago   Exited (0) 2 minutes ago             affectionate_galois
+bd6000bef078   image1    "/bin/sh -c 'echo he…"   2 minutes ago   Exited (0) 2 minutes ago             trusting_bouman
+
+*** From 1 image we can create multiple container, and those may be replica of each other.
+
+Size optimization of docker image: Suppose, my requirement is want to have a container that print hello-world
+
+vi docker file
+from ubuntu
+cmd echo "Hello-wold"
+
+vi docker file
+from alpine
+cmd echo "Hello-wold"
+
+vi docker file
+from centos
+cmd echo "Hello-wold"
+
+
+REPOSITORY   TAG       IMAGE ID       CREATED              SIZE
+image3       latest    1d0ecf15c853   7 seconds ago        231MB
+image2       latest    919f219a13e4   42 seconds ago       7.34MB
+image1       latest    0d3b4fe686d8   About a minute ago   77.8MB
+
+alpine       latest    8ca4688f4f35   5 days ago           7.34MB
+ubuntu       latest    3565a89d9e81   8 days ago           77.8MB
+centos       latest    5d0da3dc9764   2 years ago          231MB
+
+ubuntu $ docker run image1
+Hello-wold
+ubuntu $ docker run image2
+Hello-wold
+ubuntu $ docker run image3
+Hello-wold
+
+we alway need to use the base image with minimal size to optimize the docker images.
+
+Multi stage docker build
+========================
+We are breaking docker image into 2 part within 1 dockerfile to optimize the size.
+
+Multistage docker build for SPC
+FROM ubuntu as mvn
+RUN apt update
+RUN apt install -y git
+RUN apt-get update
+RUN apt install openjdk-17-jre-headless -y
+RUN git clone https://github.com/spring-projects/spring-petclinic.git
+WORKDIR spring-petclinic
+RUN ./mvnw clean package -DskipTests
+
+FROM ubuntu
+RUN apt-get update
+RUN apt install openjdk-17-jre-headless -y
+COPY --from=mvn /spring-petclinic/target/spring-petclinic*.jar /spring-petclinic.jar
+CMD java -jar /spring-petclinic.jar
+
+Purpose of image: 
+================
+1) To package application and dependancy within a image to run it anywhere. 
+2) So, in realtime environment we need to do mutiple time application restart, and it may lead to downtime. to resolve this issue docker come with the concept, here you package your application with dependancy, so depenancy on operating system.
+
+
+example: 
+1) SO, let say you have centOS, and here you can run the windows image hapily
+
+
+Docker compose: it like creating application with 2 or 3 images, but no one uses it in real time. Please refer https://docs.docker.com/compose/
+                [No one uses it].
+
+Docker networking: It is set of principles how docker can commnicate to another container. but we not using docker networking because we are running container in kubernetes, so in first class of kubernetes along with architecture we are going to discuss on this.
+
+docker on window's: Same way we work with linux container microsoft has introduced container in windows from windows 10 onward.
+
+Suppose my requirement is install git and java the run echo
+
+[First way]
+from ubuntu
+run apt-get update
+run apt install git -y
+run apt-get update
+run apt install default-jre -y
+docker build -t image1 .
+
+From image1
+cmd echo "Hello-world"
+
+[Another way]
+from ubuntu
+run apt-get update
+run apt install git -y
+run apt-get update
+run apt install default-jre -y
+cmd echo "Hello-world"
+
+Best practies all the docker keywords used to create docker image must be cpaital letter
+like run RUN, cmd CMD....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
