@@ -1,0 +1,58 @@
+Doubt session for docker
+
+https://github.com/2020ht66049/Devops_Engineering/tree/main/Container%20Engineering/Docker/Docker_old
+
+Microservice:
+=============
+From one big application we will create multiple smaller application
+Facebook > 1) Login page, 2) Facebook wall, 3) Facebook messaging...
+
+Purpose for breaking monolithic[one big] to microservice is efficincy.
+
+
+Relation between docker and K8s
+===============================
+Docker came 2011
+Docker volume, docker compose, docker swarm...
+90
+with the help of docker we are creating docker image, and remaining all the activities we are doing in K8s(goolge).
+
+https://kubernetes.io/docs/setup/best-practices/cluster-large/
+
+CNCF(Cloud native computing foundation)
+=======================================
+
+ubuntu
+ubuntu in google cloud
+ubuntu in microsoft(azure)
+ubuntu in aws(EC2)
+
+
+Docker compose and depends on
+=============================
+
+Cloud computing
+===============
+Always dont try to start from scratch.
+
+Capacity planning in 2000 > 
+
+India US Austrlia Singapore
+
+Cloud computing> Giving everything[softwares] that you need in rent
+
+in 5 yrs we have 43800 hours[5 yrs licence for windows]
+
+Total : 43800
+utilizing: 10000
+
+Pay per your use[hourly basis] all software components.
+compute, storage, networking and database.
+
+Pendrive:
+=========
+in fraction of second I can create 5 TB pendrive for you
+
+cloud computing video: https://myawsbucketfordevopswork.s3.us-east-2.amazonaws.com/Cloud+Essentials.zip
+
+fire + patrol > More fire(disaster)
