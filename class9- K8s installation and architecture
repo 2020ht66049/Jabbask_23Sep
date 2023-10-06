@@ -95,3 +95,5 @@ In managed kubernetes, your cloud provider manage eveything for you
 Cluster:
 =======
 Cluster is the combination of master and slave node working togather to do something
+
+pls refer: https://github.com/2020ht66049/Devops_Engineering/blob/main/Container%20Engineering/Kubernets/K8s_new/Documentation/Class1-%20Introduction%20and%20installation%20of%20k8s.docx
