@@ -1,0 +1,97 @@
+Kubernetes(K8s): Purpose of docker is to create image, but docker is not good for running those container.
+Because docker plaform for running container like docker compose and docker swarm are not enough capable.
+
+docker run -idt -p 8080:8080 --name mycontainer ubuntu
+
+
+Docker> dot cloud > 2013
+AWS > 2006[Cloud is proven cost reducing system, it saves upto 70% of traditonal system cost]
+
+
+Kubernetes was started in 2014, but prior to that google was having very good experiance to manage container[Borq and Omega]
+
+> https://kubernetes.io/blog/2015/04/borg-predecessor-to-kubernetes/
+> https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwiV8Z79neCBAxWmTGwGHUhrBrYQFnoECBkQAQ&url=https%3A%2F%2Fqueue.acm.org%2Fdetail.cfm%3Fid%3D2898444&usg=AOvVaw0J9J_KRR0Kij6O06WJ4NSj&opi=89978449
+
+So, K8s fain a lot of popularity, and business within sort span of time. if very effective, and very simple.
+
+What is Kubernetes?
+it's container management placeform
+
+
+Kubernetes arachietecure
+=========================
+We have 2 components(i.e. master and slaves)
+
+How many master we can have?[1,3,5.7.....] or how many slaves we can have?[no more than 5000]
+https://kubernetes.io/docs/setup/best-practices/cluster-large/
+
+Kubelete: To enable communication between master and slave we have one networking agent called kubelet.
+
+Kubeproxy: it's networking component of particular node
+
+Pod:Container in docker known as pod in kubernetes. it's using YAML way to express the things. We are having 4 things when we are writing YAML
+1) apiVersion
+2) kind
+3) metadata
+4) Specification
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+
+in master we have 4 components:
+
+Desire state: what we need
+Actual state: what we have
+
+1) Apiserver: When anyone want to create/update/retrieve and delete anything they request to api server
+
+2) Scheduler: it is having watch function by which it alway compare desire state and actual state, and creating/deleting/updating stuffs accordingly.
+
+3) controller: it's management components
+
+4) etcd: it is the store where we store the fact[how many server we have]. Souce of fact
+
+Request flow: APIserver> controller > etcd > Schedular
+
+Link for more details> https://blog.devops.dev/kubernetes-architecture-and-installation-using-kubeadm-2b12fff7b45e
+
+
+docker run -itd -p 80:80 --name nginx nginx:1.14.2
+
+ubuntu $ docker ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                               NAMES
+378ed4ac3771   nginx:1.14.2   "nginx -g 'daemon of…"   6 seconds ago   Up 5 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp   nginx
+
+Same command is not working for me
+docker: Error response from daemon: Conflict. The container name "/nginx" is already in use by container "378ed4ac37711baf7e44ecc844862bb0c204de9d8dc8dea1c2688cbd0f4929ec". You have to remove (or rename) that container to be able to reuse that name.
+
+Why we need to use standard way?
+================================
+It solve all the problem we can think of in container
+
+In oldendays people call master and slave, but these day people refer them as control plane[master] and worker plane[slave]
+
+
+Kuebernetes installation
+========================
+Install go, install make, install docker, install docker-cri
+
+
+Managed kubernetes?
+==================
+In managed kubernetes, your cloud provider manage eveything for you
+
+
+Cluster:
+=======
+Cluster is the combination of master and slave node working togather to do something
