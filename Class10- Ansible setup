@@ -1,0 +1,85 @@
+Ansible
+=======
+
+My requirement is I want to create master slave setup, and I want to perform all the operation from master only
+
+*** Kubernetes is designed to support up to 5000 nodes. 
+
+Suppose, I have 5000 boxes where I need to do migration from ubuntu 20.04 to 22.04
+
+1) Manual approache
+2) Automated way by configuration management
+
+lets setup lab then we will talk further
+
+1) Created 4 linux box in ubuntu, and given name to them like master, slave1/2/3.
+
+ec2-50-17-33-155.compute-1.amazonaws.com
+ec2-54-87-61-14.compute-1.amazonaws.com
+ec2-54-211-204-17.compute-1.amazonaws.com
+ec2-18-207-177-120.compute-1.amazonaws.com
+
+2) We have logged in to all the servers with root access.
+
+3) How to check if ansible is installed or not[MajorRelease.minorRelease.fix]
+devops@ip-172-31-41-252:/root$ ansible --version
+Command 'ansible' not found, but can be installed with:
+apt install ansible-core  # version 2.12.0-1ubuntu0.1, or
+apt install ansible       # version 2.10.7+merged+base+2.10.8+dfsg-1
+Ask your administrator to install one of them.
+
+after setup to check things on all agent
+ansible -i /etc/ansible/hosts -m command -a "hostname" all
+
+Step1: Change PasswordAuthentication to yes in /etc/ssh/sshd_config
+sudo service sshd restart
+
+Step2: sudo adduser devops
+
+Step3: sudo vi /etc/sudoers and give Sudo permission to devops
+devops   ALL=(ALL:ALL) NOPASSWD:ALL
+
+Step4: Login by devops user to master/nodes
+
+Step5: Install ansible on master by devops user
+$ sudo apt update
+$ sudo apt install software-properties-common
+$ sudo apt-add-repository --yes --update ppa:ansible/ansible
+$ sudo apt install ansible
+
+Step:6 
+ssh-keygen(On Master)
+ssh-copy-id -i ~/.ssh/id_rsa.pub <user-id>@<x-host(slave-host-name) #These commands needs to run on Master
+
+So, basic purpose it if we want to do anything in multiple server, so instead of doing in all the boxes we can do it in 1 command by ansible
+
+Requirement: I want install nginx to all the server
+
+devops@ip-172-31-41-252:/root$ nginx -v
+Command 'nginx' not found, but can be installed with:
+apt install nginx-core    # version 1.18.0-6ubuntu14.4, or
+apt install nginx-extras  # version 1.18.0-6ubuntu14.4
+apt install nginx-light   # version 1.18.0-6ubuntu14.4
+Ask your administrator to install one of them.
+
+to install nginx
+apt-get update
+apt install nginx-core -y
+
+devops@ip-172-31-41-252:/root$ nginx -v
+nginx version: nginx/1.18.0 (Ubuntu)
+
+We have to important thing in ansible-
+
+1) Adhoc commands>running command in ansible way
+      hostname
+      ansible -i[inverntory] /etc/ansible/hosts -m[module] command -a[argument] "hostname" all[server group]
+2) Playbook> collection of commands written in a particular formate
+      ansible-playbook -i[inverntory] /etc/ansible/hosts nginx_install.yml[yaml location that container configuration]
+
+
+Tomorrow' agenda
+================
+Ansible Module
+Monitoring
+monitoring setup
