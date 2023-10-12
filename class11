@@ -1,0 +1,18 @@
+We have to important thing in ansible-
+
+1) Adhoc commands>running command in ansible way > running single command
+      hostname
+      ansible -i[inverntory] /etc/ansible/hosts -m[module] command -a[argument] "hostname" all[server group]
+
+
+2) Playbook> collection of commands written in a particular formate > colection of commands
+      ansible-playbook -i[inverntory] /etc/ansible/hosts nginx_install.yml[yaml location that container configuration]
+
+Ansible configuration
+=====================
+Most of the configurations are by root, so unix team will do that, we should know how to use the tool.
+
+
+Ansible module
+=============
+https://docs.ansible.com/ansible/2.9/modules/list_of_commands_modules.html
