@@ -1,0 +1,78 @@
+Today's topic is monitoring
+===========================
+
+Monitoring purpose is to take proactive action to prevent problem, and find root cause if issue is created
+
+lets have a look in below table-
+
+Student	Maths	Physics	Chemistry
+Olu	80	67	67
+Umesh	65	64	53
+Vivek	45	65	44
+Rajesh	44	87	65
+Vijay	88	66	88
+
+
+In the monitoring we have 3 things-
+
+1) Data to be monitor: What data we want to monitor
+
+2) If we have data in multiple places then Collect data in one place.[Master slave architecture]
+
+3) Once you have data in 1 place then visualize it.
+
+IN monitoring we have couple of monitoring tools like splunk, ELK...
+
+In the splunk we have 3 components-
+
+1) Splunk forwarder- Fowarding logs from node to cerntral server
+3) Indexer- managing logs in cerntral server
+3) Search head- visualizing the logs
+
+How to install splubk:
+======================
+docker run -d -p 8000:8000 -e "SPLUNK_START_ARGS=--accept-license" -e "SPLUNK_PASSWORD=changeme" --name splunk splunk/splunk:latest
+
+userid:admin, password:changeme
+
+
+System design
+=============
+Once my cpu is greater than 80% add 1 more instance, and when utilization is less then 20% then remove 1 instance
+
+
+Categrary of monitoring
+=======================
+CAT A: High priority applications that runs 24*7[ATM, OTP, Fecabbok, whatsapp...]
+CAT B: These application are working on business hours only[Employee attendance biometric in bank]
+CAT C: Application that are yet to develope or those are in pipeline[Not yet in use]
+Hypercare: The application which is requiring attention/security[Sending money to ATM by bank]
+
+SLA: service level agreement.
+
+Key factor of any organization is log. log tell you each and everything what is happening. and you can store that log for future purpose also.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
