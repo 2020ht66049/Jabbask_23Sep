@@ -1,0 +1,61 @@
+Cloud computing Introduction
+=============================
+
+In IT industry we requiried following coponents-
+
+1) Storage
+2) computing
+3) Networking
+4) Database
+
+So, These days all the installation and management activity is done by cloud. you just need to use it.
+
+
+Example: I want to create my website, within 10 minutes I can start hosting my website.
+
+In cloud whtever you want you will get it in few clicks.
+
+Main advantage of cloud is-
+
+1) Cost: it's 90% cheaper than traditional.[pay per use]
+
+2) Agility: it's very fast.My requirement is I need 1000 GB pendrive.[I can crate in 4-5 clicks]
+
+3) Easy to use.
+
+4) Good documentation and short video for learning purpose.
+
+Is devops and cloud are same?
+Devops is all about improvement, and we can concider cloud as sub part of Devops.
+
+
+IAAS[Infrastucture as services]
+PAAS[Platform as services]
+SAAS[software as service]
+
+Capex/Opex
+==========
+I want to create e-learning portal
+
+capex: capital expendeture
+opex: opearional charges
+
+in cloud capex would be 0
+
+* Being Devops Engineer having knowledge of cloud is very important, because saving cost is the primary objective, and with the help of cloud we can easily achive it.
+
+* Devops Tools are very good to increase "time to market[Time taken to deliver code for scratch to production]"
+
+* These days in market[IT industry/organisation] People are using cloud and devops togather.
+
+
+K8s: Master: APiserver, scheular, controller and etcd
+     slave[upto 5000]: kubeproxy, kubelet and pos
+
+
+Certificate:
+
+Sunday:8 PM to 11 PM, and we will do around 10 certificates
+
+
+
