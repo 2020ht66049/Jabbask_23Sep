@@ -93,7 +93,7 @@ Cronjob:https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
 
 
 Tomorrow:
-Services, helm, HPA, VPA, ingress, namespace, cluster, RBAC
+Services, deployment, statefulset, HPA, rRBAC and helm
 
 Office
 9 AM[Start] to 6 PM[ends]
