@@ -1,0 +1,132 @@
+Networking, Services, deployment, statefulset, HPA, rRBAC and helm
+===================================================================
+
+Networking
+==========
+In kubernetes container count would be 300000, and these container spread around 5000 nodes, so appox 60 container/Node
+[https://kubernetes.io/docs/setup/best-practices/cluster-large/]
+
+
+Container count may increase or decrease, so we have define max container size in node 110 pods/Node.
+
+Now, these container needs to talk to each other for business purpose, those rule of communication between container is known as networking
+
+in kubernetes we have singlenode and multinode container communication.
+
+Link: https://kubernetes.io/docs/concepts/cluster-administration/networking/
+
+When we do installation we need to install network then only communication will start.
+
+
+HPA[Horizontal pod autoscaller]
+===============================
+Replicaset/replication controller can scaleup and scaledown the application. Now my requirement is depending on resources do container autoscalling is known as HPA.
+
+Rule: if avg. CPU is greater than 70 then add 1 instance, and if it's lower then 30 then remove 1 instance.
+
+
+Time	Avg CPU	Instance count
+1	70	1
+2	35	2
+3	60	2
+4	100	3
+5	10	1
+6	500	10
+
+HPA: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+
+Watch function
+==============
+Watch function keep eye on entire cluster resources, and create/delete resources depending on YAML
+
+Services
+========
+Their are 4 types services
+1) Nodeport
+2) Cluster IP
+3) Load balancer
+3) Headless
+
+Service
+=======
+In K8s container created/deleted in every minute, so if we are accessing container direcly then it may cause issue. to solve this problem service in introduced where we are accessing the container by common pool
+
+Nodeport
+========
+Support, I want to access C1, then I need to access by directly/Node
+if I access by node then it's known as nodeport
+ docker run -idt -p 8080:8080 C1
+
+Headless
+========
+Direct access of container, but it's mostly not allowed.
+
+ClusterIP
+=========
+This services is used for internal communication. it's means within cluster you can use it, not outside.
+
+Loadbalancer
+===========
+This services is for load balancing purpose. and you can access from outside as well.
+
+Application and it's type
+=========================
+Their are two types of application-
+1) Stateful application > statefulset
+2) Stateless Application > Deploymentset
+
+Link: https://www.redhat.com/en/topics/cloud-native-apps/stateful-vs-stateless
+
+Rbac
+====
+Role based access control. it primarily deals with authentication and autherization.
+https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-admin
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["get", "watch", "list", "create", "delete"]
+
+Role binding
+============
+subjects:
+- kind: User
+  name: dave # Name is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: secret-reader
+  apiGroup: rbac.authorization.k8s.io
+
+https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+Helm
+====
+link: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+it's a tool by which we can manage kubernetes configuration.
+
+How to enable networking
+========================
+When we install kubernetes, we need to select networking
+https://github.com/flannel-io/flannel
+
+
+Next class: Volume, storageclass, namespace, helm
+Next to next: container design
