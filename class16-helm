@@ -1,0 +1,177 @@
+Kubectl, namespace and helm
+===========================
+
+In kubernetes we have multiple resources like pod, service, nodes, cluster, namespace....
+to create these resources we need to write YAML file.
+
+Lets say I have YAML file[Resource.YAML], so 
+
+Creating, updating , retriving and deleting the resource
+========================================================
+To create resource > kubectl create -f filename
+to delete resource > kubectl delete -f filename
+to retrieve the resoure > kubectl get resource-name
+controlplane $ kubectl get nodes
+NAME     STATUS   ROLES                  AGE     VERSION
+ubuntu   Ready    control-plane,master   2d10h   v1.28.1-rc2+k3s1
+controlplane $ kubectl get pods 
+No resources found in default namespace.
+controlplane $ kubectl get svc 
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.43.0.1    <none>        443/TCP   2d10h
+Update: Better approache to update anything is update the file and rerun the create command.
+Example: in my replicaset I have replica=3, and now I want to have 20 replica.
+
+Cheatsheat: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+
+controlplane $ kubectl get pods
+No resources found in default namespace.
+
+controlplane $ kubectl create -f resource.yaml 
+pod/nginx created
+controlplane $ kubectl get pods
+NAME    READY   STATUS              RESTARTS   AGE
+nginx   0/1     ContainerCreating   0          9s
+
+Here, vi editior is user to write containt in resource.yaml file which we would be using for resource creation.
+
+controlplane $ kubectl create -f cronjob.yaml
+error: the path "cronjob.yaml" does not exist
+
+controlplane $ vi cronjob.yaml
+controlplane $ kubectl create -f cronjob.yaml
+cronjob.batch/hello created
+
+Namespace:
+==========
+Namespaces are a way to organize clusters into virtual sub-clusters 
+
+It is alway recomded to create virtual environment instead of physical. so lets say I have 3 environment[Dev, Test and Prod], so I need to create 3 cluster.
+
+With the help of namespace I can create all three resource in same cluster.
+
+kubectl create namespace <insert-namespace-name-here>
+
+kubectl create namespace dev
+kubectl create namespace test
+kubectl create namespace prod
+
+controlplane $ kubectl -n dev create -f resource.yaml
+pod/nginx created
+controlplane $ kubectl -n test create -f resource.yaml
+pod/nginx created
+controlplane $ kubectl -n prod create -f resource.yaml
+pod/nginx created
+
+controlplane $ kubectl get pods
+No resources found in default namespace.
+controlplane $ kubectl -n dev get pods
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          102s
+controlplane $ kubectl -n test get pods
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          98s
+controlplane $ kubectl -n prod get pods
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          98s
+
+Name space is a simply isolation area.
+
+[Link] > https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+
+Helm:
+1) I want to install jenkins
+https://www.jenkins.io/doc/book/installing/kubernetes/
+
+2) lets say my requirement is to install jenkins in docker
+      docker run -idt -p 8000:8000 jenkins:jenkins
+3) I want to install jenkins in kubernetes
+
+Helm is the package manager for kubernetes, here you just need to run 1 command to install anything.
+
+to create helm chart> helm create <chart-name>
+
+controlplane $ helm create olu
+Creating olu
+controlplane $ ls
+filesystem  olu
+
+controlplane $ ls
+Chart.yaml  charts  templates  values.yaml
+
+controlplane $ cd templates/
+controlplane $ ls
+NOTES.txt     deployment.yaml  ingress.yaml  serviceaccount.yaml
+_helpers.tpl  hpa.yaml         service.yaml  tests
+
+Chart.yaml file> This is the meta data about chart
+
+templates/YAML-file> this is the set of yaml file used for create configuration
+
+chart> if any other chart needs to get linked.
+
+value.yaml> we specify the values
+
+bitname chart> it's repository where we will keep chart.
+https://bitnami.com/stack/jenkins/containers
+
+My requirement is I want you to create helm chart for sping pet clinic application
+
+Sunday: saturday> same time
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
