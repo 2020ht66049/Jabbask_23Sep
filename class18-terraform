@@ -1,0 +1,155 @@
+Pending topic in k8s: Volume, secrate, annotation, docker compose, docker networking, docker on windows [Max 30 Minutes, We will do it on Monday]
+
+Today's topic: terraform.
+
+Terraform is a software under the categary of IAC[Infrastucture as code]
+
+Terraform learning: https://developer.hashicorp.com/terraform/tutorials/aws-get-started
+Build infrastucture: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-build
+
+Step1) As a first step, we have created EC2 server. and install terraform 
+Link https://developer.hashicorp.com/terraform/downloads
+
+Step2) Create IAM user and group. and get accesskey and scerate key
+AKIAWGJPQBMNWCT4RYMJ   <access key>
+pYO7aKAVcy2BS/Do4AUHGqZ6FB3PSh9iw6M8f0EY   <Secrate key>
+
+Access key and secrate key are like userid and password
+
+
+export AWS_ACCESS_KEY_ID=AKIAWGJPQBMNWCT4RYMJ
+export AWS_SECRET_ACCESS_KEY=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
+
+terraform apply > to create infrastucture
+terraform destroy > to delete infrastucture
+
+Terraform is a tool by which we can create/update/delete and retrieve data/infrastucture in cloud
+
+Question: Their are so many cloud provider, so how many of them are supported by terraform?
+Answer: All[https://registry.terraform.io/browse/providers] it supports 3500+ providers.
+
+
+So, when you are using any provider, you need to follow it's template to write resources
+
+like for AWS: https://registry.terraform.io/providers/hashicorp/aws/latest
+
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.22.0"
+    }
+  }
+}
+
+provider "aws" {
+  # Configuration options
+}
+
+
+Azure: https://registry.terraform.io/providers/hashicorp/azurerm/latest
+
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "3.77.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  # Configuration options
+}
+
+
+Oracle cloud: https://registry.terraform.io/providers/oracle/oci/latest
+terraform {
+  required_providers {
+    oci = {
+      source = "oracle/oci"
+      version = "5.17.0"
+    }
+  }
+}
+
+provider "oci" {
+  # Configuration options
+}
+
+
+Suppose, my requirement is to create EC2 instance in AWS
+
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.22.0"
+    }
+  }
+}
+
+provider "aws" {
+  data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "HelloWorld"
+  }
+}
+}
+
+
+Terraform is a software by which we can create/delete/update infrasture in anywhere
+
+Casestudy: I am working on a company 9 AM to 6 PM, but I don't want my system to run 24*7
+
+By 8:30 AM: terraform apply
+by 6:30 PM: terraform destroy
+
+Terraform uses main.tf file, and create delete and update infrastucture by it.
+
+
+Question: Can't be terminated instance started?
+Once anything terminated, then it cann't be started. you need to create new1.
+
+
+How billing is going to happen?
+===============================
+So, we are using accesskey and secrate key. depending on their usage billing is going to happen.
+
+
+Good point about terraform
+==========================
+1) Easy to install.
+2) Easy to use
+3) Very good documentaion.
+
+
+Can be use killerkode for terraform?
+Answer:yes
+
+aws_instance.app_server: Refreshing state... [id=i-0672a644b2bad21f3]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
