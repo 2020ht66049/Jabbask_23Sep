@@ -1,0 +1,198 @@
+Topic: CICD[10 days]
+=====
+GIT 
+GITHUB
+GERRIT
+Jenkins
+Sonarqube
+artifactory
+DevSecops
+maven
+testing
+
+CICD is a very impotant concept in devops it includes above topic.
+
+Task: I want you to tell me step how to draw elephant[5 minutes time]
+
+question 1) Is it easy to write the steps > No
+Question 2) Are you sure your steps are correct? or they need some modification> yes, they need some modification
+
+Developer are working 10 yrs ahead, and they have habbit to do hit trial to deliver the perfect project, and their job is not so easy, they need to do so many modification based on customer feedback.
+
+Base: My customer and developer must talk togather.
+
+Suppose, client has a requirement to write code for calculator.
+
+Version1: Developer has written some come, and send it for review to client.
+Responce1: Client has given some comments.
+
+Version2: Developer has added fix for requirement, and send for review.
+Responce2: Client has given some more comments
+
+Version3: Developer has added fix for requirement, and send for review.
+Responce2: Client has given some more comments
+
+Version4: Developer has added fix for requirement, and send for review.
+Responce2: Client has given some more comments
+
+Version5: Developer has added fix for requirement, and send for review.
+Responce2: Client has given some more comments
+
+Version6: Developer has added fix for requirement, and send for review.
+Responce2: Client has given some more comments
+
+Now, client is telling my first version was good, but somehow developer lost it.
+
+What is GIT?
+GIT is a mechanism/tool to track file changes. 
+
+Here, if I want to track the changes of my file, then I need to create 6 files otherwise only last change would be available
+V1: Hi
+V2: Hello
+V3: Bye
+V4: Thanks
+V5: namaste:
+V6: see you
+
+To track these changes in one file, we have GIT.
+
+How GIT is working
+==================
+GIT has 4 different area[Working tree, stagging, local repo and remote repository]
+
+What is GIT architecture
+========================
+See  GIT flow image
+
+Creating repository
+==================
+[Link]: https://docs.github.com/en/get-started/quickstart/create-a-repo
+
+repository naming converntion: 
+1) The repository name can only contain ASCII letters, digits, and the characters ., -, and _.
+2) maximum is 100 characters
+
+Public- Anyone on the internet can see this repository. You choose who can commit.
+Private- You choose who can see and commit to this repository.
+
+Once you create the repository, you would be getting page> https://github.com/2020ht66049/Olu_devops_gits_23102023
+
+This page will have repository URL like https://github.com/2020ht66049/Olu_devops_gits_23102023.git and couple of git commands
+
+echo "# Olu_devops_gits_23102023" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/2020ht66049/Olu_devops_gits_23102023.git
+git push -u origin main
+
+…or push an existing repository from the command line
+
+git remote add origin https://github.com/2020ht66049/Olu_devops_gits_23102023.git
+git branch -M main
+git push -u origin main
+
+When we are working with GIT, first we need to tell who we are. otherwise GIT will not allow you to commit[save] any things
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+
+In GIT we can see below
+Get started by creating a new file or uploading an existing file. We recommend every repository include a README, LICENSE, and .gitignore. 
+
+Remote repository: it's a place where we keep our changes, and those are accessible by HTTP URL.
+
+Local repository: to create copy of repository in local > git clone <repo_URL>, it reffered as local repository
+
+remote: Support for password authentication was removed on August 13, 2021.
+remote: Please see https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls for information on currently recommended modes of authentication.
+fatal: Authentication failed for 'https://github.com/2020ht66049/Olu_devops_gits_23102023.git/'
+
+In GIT we need follow token based authentication.
+
+How to create token: https://docs.github.com/en/enterprise-server@3.6/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+
+ 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
+
+git remote set-url origin https://<GITHUB_ACCESS_TOKEN>@github.com/<GITHUB_USERNAME>/<REPOSITORY_NAME>.git
+git remote set-url origin https://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@github.com/2020ht66049/Olu_devops_gits_23102023.git
+
+
+you have 100MB image, and you need to update it into passport portal, but passport taking only 2M image
+100MB>compress>2MB
+100MB>compress>70>compress>40>compress>32>compress>26>compress>20>compress>16>compress>8>compress>6>compress>3>compress>2
+
+in GIT maximum compression is dobe by default, so we can save 12 GB file into 420 MB
+[SVN repository required 12GB, but for same content git requires 420MB]
+
+
+git init: create a empty repository
+ubuntu $ git init
+Initialized empty Git repository in /root/olu/.git/
+
+git add/git commit
+
+
+Homework: 1) Create github account
+          2) Create repository
+          3) Create GIT flow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Creating GIThub account
+======================
+
+Steuping up GIT flow
+=====================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
