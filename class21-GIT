@@ -1,0 +1,19 @@
+Topday's topic: Handson on GIT commands
+
+Source: https://www.freecodecamp.org/news/git-cheat-sheet/ 
+
+commit message
+=============
+
+[Devops] Sharing study notes with Olu
+
+Reason: New joiner in janbask
+
+
+C1 C2 C3 C4 C5 C6 C7[Head]
+C1 C2 C3 C4 C5 C6 C7 C8[Head]
+
+Head: Head is pointer to latest commit
+
+git <linux command>
+
