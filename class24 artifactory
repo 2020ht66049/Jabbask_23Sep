@@ -1,0 +1,48 @@
+Class16- GIT Terminology.docx
+Class17- GIT Core Concepts.docx
+
+Today's topic: Artifactory
+===========================
+It's a storage place where we would be storing artifact.
+
+Pending1: Sonarqube and quality gate
+Pending2: Jenkins setup
+Pending3: Dashboard navigating jenkins
+Pending4: CICD pipeline[Cloud, automation]
+pending5: Deep study about CICD pipeline
+Pending6: Devsecops
+
+It support all major programming language, and it's very easy to use.
+
+Artifactory installation: https://jfrog.com/artifactory/install/
+
+How to get licence: https://jfrog.com/pricing/#Pro then click on start free
+
+How to upload and download data in artifactory:
+===============================================
+https://jfrog.com/cheat-sheet/jfrog-cli-made-easy/
+
+GIThub vs Jfrog artifacotory
+============================
+in GIThub we have size limit, we are not getting allowed to upload anything greated than 25MB, but realtime things are very big in size
+
+Artifacotry for helm chart
+===========================
+
+https://janbask.jfrog.io/artifactory/api/helm/janbask-helm
+
+For upload:
+curl -udevopschamp143@gmail.com:<PASSWORD> -T <PATH_TO_FILE> "https://janbask.jfrog.io/artifactory/janbask-helm/<TARGET_FILE_PATH>"
+curl -dldevopschamp143@gmail.com:<PASSWORD> -T <PATH_TO_FILE> "https://janbask.jfrog.io/artifactory/janbask-helm/<TARGET_FILE_PATH>"
+
+for download:
+
+Homework: Please spend time with https://jfrog.com/artifactory/
+
+
+
+
+
+
+
+
