@@ -1,0 +1,127 @@
+Exacize: Create one local artifactory with name janbaskolu and push docker image in it?
+will take 5 minutes time for analysis then we will start
+
+
+Step1: Created image with name image1, and now let me try to create repository.
+
+Step2: in artifactory, we have 3 type of repository-
+1) Local repository[it's a place where we store our data]
+2) remote repostory[it's like place from where we download dependacy]
+3) Virtual repository[it's combination of local and remote]
+
+docker tag <IMAGE_ID> janbask.jfrog.io/oludevops/<DOCKER_IMAGE>:<DOCKER_TAG>
+docker tag image11 janbask.jfrog.io/oludevops/image11:olu
+
+docker push janbask.jfrog.io/oludevops/<DOCKER_IMAGE>:<DOCKER_TAG>
+docker push janbask.jfrog.io/oludevops/image11:olu
+
+Sonarqube:
+==========
+How to install sonarqube?
+https://docs.sonarsource.com/sonarqube/latest/setup-and-upgrade/install-the-server/
+
+In sonarqube we have 2 components.
+1) Front end GUI
+2) Database which store required things.
+
+
+Note:
+1)Sonarqube run with port 8000, and it required high capacity server and if we provide lower capacity then server would be crash[same with Jfrog]
+Your session has expired and all of your instances have been deleted.
+
+
+2)As we are moving to cloud, all these tool are easily available in the cloud.
+https://sonarcloud.io/login
+
+Sonarqube architecture:
+=======================
+1) Front end
+2) Database
+
+In database we install report, and we will fetch them by front end
+
+
+bug: it's error in functionality[1+1=2; 1+1=1]
+
+Codesmell: you have written the code where you allocated memory, but not freeing it in the last.
+
+Vurnability: Weak point of you design
+
+Duplication: 
+
+With the help of sonarqube you can perform static code analysis.
+
+Quality gate: These are the parameter to define code quality
+
+# This function adds two numbers
+def add(x, y):
+    return x + y
+
+# This function subtracts two numbers
+def subtract(x, y):
+    return x - y
+
+# This function multiplies two numbers
+def multiply(x, y):
+    return x * y
+
+# This function divides two numbers
+def divide(x, y):
+    return x / y
+
+
+print("Select operation.")
+print("1.Add")
+print("2.Subtract")
+print("3.Multiply")
+print("4.Divide")
+print("5.Percentage")
+print("6.Equals")
+print("7.notification")
+print("8.screensclean")
+
+
+
+while True:
+    # take input from the user
+    choice = input("Enter choice(1/2/3/4/): ")
+
+    # check if choice is one of the four options
+    if choice in ('1', '2', '3', '4'):
+        try:
+            num1 = float(input("Enter first number: "))
+            num2 = float(input("Enter second number: "))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+            continue
+
+        if choice == '1':
+            print(num1, "+", num2, "=", add(num1, num2))
+
+        elif choice == '2':
+            print(num1, "-", num2, "=", subtract(num1, num2))
+
+        elif choice == '3':
+            print(num1, "*", num2, "=", multiply(num1, num2))
+
+        elif choice == '4':
+            print(num1, "/", num2, "=", divide(num1, num2))
+        
+        # check if user wants another calculation
+        # break the while loop if answer is no
+        next_calculation = input("Let's do next calculation? (yes/no): ")
+        if next_calculation == "no":
+          break
+    else:
+        print("Invalid Input")
+
+
+Number of line: 20
+How may are executed when we run program: 6
+
+it means my code is having less line coverage.
+Line coverage: it means percentage of number of line used in code. Here line coverage is 30%. 
+
+My line coverage should be greater than 80%
+
+qulaity check
