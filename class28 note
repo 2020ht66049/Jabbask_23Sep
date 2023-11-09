@@ -1,0 +1,71 @@
+ChatGPT: it's AI based tool to do any activity
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code from version control (e.g., Git)
+                git 'https://github.com/your/repository.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Build your application (replace 'your_build_command' with the actual build command)
+                sh 'your_build_command'
+            }
+        }
+
+        stage('Unit Test') {
+            steps {
+                // Run unit tests for your application
+                sh 'your_unit_test_command'
+            }
+        }
+
+        stage('Integration Test') {
+            steps {
+                // Run integration tests for your application
+                sh 'your_integration_test_command'
+            }
+        }
+
+        stage('Deploy to Staging') {
+            steps {
+                // Deploy your application to a staging environment
+                sh 'your_deploy_to_staging_command'
+            }
+        }
+
+        stage('Deploy to Production') {
+            when {
+                // Example: Deploy to production only if the branch is 'main'
+                expression { env.BRANCH_NAME == 'main' }
+            }
+            steps {
+                // Deploy your application to the production environment
+                sh 'your_deploy_to_production_command'
+            }
+        }
+
+        stage('Post-Deployment Cleanup') {
+            steps {
+                // Perform any necessary post-deployment cleanup tasks
+                sh 'your_cleanup_command'
+            }
+        }
+    }
+
+    post {
+        success {
+            // Perform actions when the pipeline succeeds (e.g., notifications)
+            echo 'Pipeline succeeded! Celebrate!'
+        }
+        failure {
+            // Perform actions when the pipeline fails (e.g., notifications)
+            echo 'Pipeline failed! Take corrective actions.'
+        }
+    }
+}
