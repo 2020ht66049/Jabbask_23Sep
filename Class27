@@ -1,0 +1,165 @@
+Interview questions: https://github.com/JanbaskDevops/Interview_questions
+
+Jenkins donwload: https://pkg.jenkins.io/debian-stable/
+As a prework you need to create EC2, and pay some money to amazon. because we required higher capacity 
+
+link: https://www.jenkins.io/doc/book/installing/windows/
+
+Minimum hardware requirements:
+
+    256 MB of RAM
+    1 GB of drive space (although 10 GB is a recommended minimum if running Jenkins as a Docker container)
+
+Recommended hardware configuration for a small team:
+
+    4 GB+ of RAM
+    50 GB+ of drive space
+
+For 4GB RAM, free-tier[1GB, 8GBdrive] would be not eligible, so we need to pay amout to amazon
+
+
+
+Setup in docker
+===============
+docker run -idt -p 8080:8080 jenkins/jenkins
+docker container exect -it <container name> /bin/bash
+cat ./var/jenkins_home/secrets/initialAdminPassword
+
+[Note]: Please do setup this in docker playground
+
+The leading open source automation server, Jenkins provides hundreds of plugins to support building, deploying and automating any project. 
+
+Jenkins is basically a schedular[cronjob] that you can schedule at any point of time.
+
+in Jenkins we have 2 types of job-
+
+Freestyle job
+=============
+Here we would be having GUI options
+
+Build trigger[build periodically]: This is basically cron job syntax 
+
+             * * * * * > Every minute
+ 
+Use https://crontab.guru/ to write jobs
+
+My requirement is I want to run a job everyday at 6 AM in the morning Monday to Friday> 00 6 * * 1,5
+
+console log: Here, you would be seeing output of your command.
+
+Realtime senario: Suppose, my team taking database backup everyday at 6 AM, and I am starting all environment by 8 AM, and I am shutting down my environment by 6 PM. so I need 1 person to do this activity. but I can easily automate this by jenkins job
+
+[?] Options: Support you want to learn more about jenkins options then you can click on [?] to get more info.
+
+Disable/Enable project: if you disable the project, it will not work anymore.
+
+Pipeline job:
+=============
+pipeline {
+    agent any
+
+    stages {
+        stage('stage1') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('stage2') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('stage3') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
+
+Maven:
+======
+Let say my requirement is installing sping pet clinic application in ubuntu
+
+git clone https://github.com/spring-projects/spring-petclinic.git
+cd spring-petclinic
+./mvnw package
+java -jar target/*.jar
+
+Required tool: Java 17 and GIT
+
+When we are writing anycode, we have 2 things-
+1) Business logic : [+,-,*,/]
+2) Presentation logic: [GUI of calculator]
+
+in my application, I would be having presentation logic and business logic.
+
+
+ubuntu in azure (or) ubuntu in aws (or) ubuntu in GCP these are not same, bacause in ubuntu we have 2 things 
+1) Source code
+2) Application
+
+1) when we are running any application, that application requirered so many dependancy that we need to download from internet.
+
+2) Whenever we are executing any program we have some stardard way.
+      for example: Java
+          1) I need to save that program as pragram_name.java
+          2) javac program_name.java
+          3) java programname
+
+3) to automate all these activity we have a tool called maven.
+
+4) Maven is POM based tool to do build activities.
+
+how to install mavem
+  apt-get update
+  apt install maven
+
+ubuntu $ mvn -v    
+Apache Maven 3.6.3
+Maven home: /usr/share/maven
+Java version: 11.0.20.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
+Default locale: en_US, platform encoding: ANSI_X3.4-1968
+OS name: "linux", version: "5.4.0-131-generic", arch: "amd64", family: "unix"
+
+
+    validate: check if all information necessary for the build is available
+    compile: compile the source code
+    test-compile: compile the test source code
+    test: run unit tests
+    package: package compiled source code into the distributable format (jar, war, …)
+    integration-test: process and deploy the package if needed to run integration tests
+    install: install the package to a local repository
+    deploy: copy the package to the remote repository
+
+
+let say if maven is not present
+https://github.com/spring-projects/spring-petclinic/tree/main/src/main/java/org/springframework/samples/petclinic
+1) PetClinicApplication.java
+2) PetClinicRuntimeHints.java
+
+javac PetClinicApplication.java > PetClinicApplication.class
+javac PetClinicRuntimeHints.java > PetClinicRuntimeHints.class
+
+Now, you need to combine those 2 java classes
+
+POM: https://www.tutorialspoint.com/maven/maven_pom.htm
+
+To deploy Maven artifacts to Artifactory, add a deployment element to the pom.xml file of your Maven project with the target local repository URL that you want to deploy your artifacts to. For example:
+
+<distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>a0bfm15ripfxq-artifactory-primary-0-releases</name>
+        <url>https://janbask.jfrog.io/artifactory/olumaven</url>
+    </repository>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>a0bfm15ripfxq-artifactory-primary-0-snapshots</name>
+        <url>https://janbask.jfrog.io/artifactory/olumaven</url>
+    </snapshotRepository>
+</distributionManagement>
+
+
+
+Tomorrow: Testing[unit, integration testing, system testing, smoke testing], packaging, jenkins pipeline syntax 
