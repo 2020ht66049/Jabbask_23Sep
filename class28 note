@@ -69,3 +69,191 @@ pipeline {
         }
     }
 }
+
+Waiting for resource to join
+
+Agenda: Testing[unit, integration testing, system testing, smoke testing], packaging, jenkins pipeline syntax and how to write pipeline
+
+Setup in docker
+===============
+docker run -idt -p 8080:8080 jenkins/jenkins
+docker container exec -it <container name> /bin/bash
+cat ./var/jenkins_home/secrets/initialAdminPassword
+
+Lastclass: ChatGPT
+
+Step1: Let me create 1 pipeline with hello world
+
+pipeline{
+stages
+stage
+ steps
+stage
+ steps
+stage
+ steps
+}
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Stage1') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+            stage('Stage2') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+            stage('stage3') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+            stage('stage4') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
+
+
+
+Let say I want to create pipeline for any application, and I have steps for that application from begining till deployment.
+
+Deployment steps:
+=================
+git clone https://github.com/spring-projects/spring-petclinic.git
+
+cd spring-petclinic
+./mvnw package
+
+java -jar target/*.jar
+
+Once we deploy the application we would be able to access the application by port 8080
+
+SAST
+sh /scripts/sast.sh
+
+DAST
+sh /scripts/Dast.sh
+
+Usertesting
+sh /script/usertesting.sh
+
+http://ip172-18-0-43-clanl4ogftqg00bvec2g-8080.direct.labs.play-with-docker.com/job/zzz-Olu-thirdpipeline/pipeline-syntax/
+
+This is the utility that can be very helpful to create pieline
+
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Cloning repository') {
+            steps {
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/spring-projects/spring-petclinic.git'
+            }
+        }
+            stage('Packing Application') {
+            steps {
+                sh '''echo "Packaging code"
+                      ./mvnw package '''
+            }
+        }
+            stage('Artifactory upload') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+            stage('SAST and DAST') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
+
+
+
+CMMI: It define standard for product/project delivery.
+
+Olu has a requirement: Olu want Umesh to create E-learning portal for him.
+Solution: Umesh will create code and deliver to Olu.
+
+Above Process has some bugs because we need to perform multilevel testing before we deliver code to Olu. 
+
+Level1: UnitTesting, Integration testing and System testing.
+
+Level2: DAST/SAST[Dynamic application security testing/Static application security testing]
+
+Level3: We would be performing User acceptance testing
+
+Level4: Code handover
+
+So, as per standard to do anything we required Environment. and each level required new environment.
+
+Development: Here my developer would be developing the code
+
+Test:  UnitTesting, Integration testing and System testing
+
+Stage: DAST/SAST[Dynamic application security testing/Static application security testing]
+
+UAT[User acceptance testing]: We would be performing User acceptance testing
+
+Production: My code is running for client.
+
+Example: I have calculator with 4 module[Add/Sub/Mul/Div]
+
+Unit Testing: We would be performing testing to each module indivisually.
+
+Intgration testing: we will combine all module, and perform testing
+
+System testing: We would be testing funtional and non-function[battery] things
+
+
+    validate - validate the project is correct and all necessary information is available
+    compile - compile the source code of the project
+    test - test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed
+    package - take the compiled code and package it in its distributable format, such as a JAR.
+    verify - run any checks on results of integration tests to ensure quality criteria are met
+    install - install the package into the local repository, for use as a dependency in other projects locally
+    deploy - done in the build environment, copies the final package to the remote repository for sharing with other developers and projects.
+
+Important note: 
+
+1) For all the above stage people[developer, tester, all other ppl] are running linux command, and they are informing each other by mail notification
+
+Developer > Mail > Deployment Engineer > Mail > Testing group1 > mail > Testing group2 > mail > Customer do testing > Aknowledgement > final wrapup
+Above process take near 5-6 days, and we need to manage multiple environment.
+
+2) Lets solve this problem by Devops[Jenkins]
+
+Job1- Unit and system testing
+Job2- DAST/SAST
+Job3- UAT
+Job4- Final deployment
+
+https://subscription.packtpub.com/book/cloud-and-networking/9781788297943/8/ch08lvl1sec81/understanding-upstream-and-downstream-jobs
+
+TriggerJob1[I will mention to trigger next job] > TriggerJob2[I will mention to trigger next job]  > TrgigerJob3[I will mention to trigger next job]  > TriggerJob4
+
+1) Automation: So what all steps are done by testing, deployment Engineer are automated.
+
+2) No Multiple environment, I can have only Development and production envinment. remaing all environment I would creating/delete as per need[terraform]
+
+Achiving: Cost optimization, time optimization and stability.
+
+
+NextClass: CICD pipeline introduction, Nodes, plugin and cloud native application design, integrating devops tools
+
+
+
+
+
+
