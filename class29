@@ -1,0 +1,127 @@
+Today's Topic: CICD pipeline
+===========================
+1) Distributed architecture
+2) Plugin
+3) Continious intergration
+4) continious delivery
+5) continious deployment
+6) Job navigation
+
+docker run -idt -p 8080:8080 jenkins/jenkins
+docker container exec -it <container name> /bin/bash
+cat ./var/jenkins_home/secrets/initialAdminPassword
+
+In my current configuration we have 1 CPU and 4 GB RAM.
+Minimum hardware requirements:
+
+    256 MB of RAM.
+    1 GB of drive space (although 10 GB is a recommended minimum if running Jenkins as a Docker container)
+
+Suppose, I want to run one application that required 4 CPU and 32 GB RAM, they we cant tun that application with normal jenkins.
+Solution: I will create 1 server and give name as server_hc
+
+pipeline {
+    agent any# it means run on any server
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
+
+Jenkins works on master slave architecture. Where master only take the orders, and work is done by slave. and we would be invoking slave by agent.
+manage jenkins > Nodes > addnode > givename[agent name]
+Refer: https://sachinmamoru.medium.com/connect-aws-instance-as-jenkins-slave-node-19fc9cc9a4ad
+
+pipeline {
+    agent server_hc
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
+
+Plugin:
+=======
+Enhancing software functionality.
+
+https://plugins.jenkins.io/
+
+Jenkins build option
+=====================
+Explore by yourself
+
+
+CICD
+====
+let say I have code provided by my team
+
+git clone https://github.com/spring-projects/spring-petclinic.git
+cd spring-petclinic
+./mvnw package
+java -jar target/*.jar
+
+You can then access petclinic at http://localhost:8080/
+
+So, I will testing this application in multiple environment like Dev Test stage UAT and final running in production[5 environment]
+
+We have 3 types of pipeline
+
+Production: It's final server where customer are using application
+
+Dev > Test > Stage > UAT[User acceptance testing] > Production
+
+1) Continous deployment: Here code will deploy automatically till production.
+2) Continous delivery: it will deploy code till UAT, and waiting for approval to deploy in production.
+3) Contionious integration: it's default pipeline. Here we would be combining the soruce code.
+
+
+https://www.jetbrains.com/teamcity/ci-cd-guide/continuous-integration-vs-delivery-vs-deployment/
+
+Party from OLu:
+===============
+Pizza, Burger, Pasta, sweets, return gift [10 PPL]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
