@@ -1,0 +1,406 @@
+Exacize:
+
+Lets give 20 minutes, just see these task and just tell me are you able to do this or not? > we would be resuming by 7:50
+ 
+1) Devops IAC challenge > https://github.com/hca-dev/iac-code-challenge
+
+provider "kubernetes" {
+  config_path = "~/.kube/config"
+}
+
+variable "namespace" {
+  default = "nginx-namespace"
+}
+
+variable "image_name" {
+  default = "nginx:latest"
+}
+
+variable "cpu_limit" {
+  default = "0.5"
+}
+
+variable "memory_limit" {
+  default = "512Mi"
+}
+
+variable "pvc_path" {
+  default = "${PWD}/pvc"
+}
+
+variable "gcp_project" {
+  default = "your-gcp-project-id"
+}
+
+resource "kubernetes_namespace" "nginx_namespace" {
+  metadata {
+    name = var.namespace
+  }
+}
+
+resource "kubernetes_deployment" "nginx_deployment" {
+  metadata {
+    name      = "nginx-deployment"
+    namespace = kubernetes_namespace.nginx_namespace.metadata[0].name
+  }
+
+  spec {
+    replicas = 2
+
+    selector {
+      match_labels = {
+        app = "nginx"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "nginx"
+        }
+      }
+
+      spec {
+        container {
+          name  = "nginx"
+          image = var.image_name
+
+          resources {
+            limits = {
+              cpu    = var.cpu_limit
+              memory = var.memory_limit
+            }
+          }
+
+          volume_mount {
+            name      = "nginx-logs"
+            mount_path = "/var/log/nginx"
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_service" "nginx_service" {
+  metadata {
+    name      = "nginx-service"
+    namespace = kubernetes_namespace.nginx_namespace.metadata[0].name
+  }
+
+  spec {
+    selector = {
+      app = kubernetes_deployment.nginx_deployment.spec[0].template[0].metadata[0].labels.app
+    }
+
+    port {
+      protocol   = "TCP"
+      port       = 8080
+      target_port = 80
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume" "nginx_persistent_volume" {
+  metadata {
+    name      = "nginx-pv"
+    namespace = kubernetes_namespace.nginx_namespace.metadata[0].name
+  }
+
+  spec {
+    capacity = {
+      storage = "2Gi"
+    }
+
+    access_modes = ["ReadWriteOnce"]
+
+    local {
+      path = var.pvc_path
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume_claim" "nginx_persistent_volume_claim" {
+  metadata {
+    name      = "nginx-pvc"
+    namespace = kubernetes_namespace.nginx_namespace.metadata[0].name
+  }
+
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = "2Gi"
+      }
+    }
+  }
+}
+
+resource "kubernetes_pod" "nginx_pod" {
+  metadata {
+    name      = "nginx-pod"
+    namespace = kubernetes_namespace.nginx_namespace.metadata[0].name
+  }
+
+  spec {
+    container {
+      name  = "nginx"
+      image = var.image_name
+
+      volume {
+        name = "nginx-logs"
+        persistent_volume_claim {
+          claim_name = kubernetes_persistent_volume_claim.nginx_persistent_volume_claim.metadata[0].name
+        }
+      }
+    }
+  }
+}
+
+# If deploying to GCP, set up GKE cluster
+provider "google" {
+  credentials = file("path/to/your/gcp/keyfile.json")
+  project     = var.gcp_project
+  region      = "us-central1"
+}
+
+resource "google_container_cluster" "cluster" {
+  name     = "nginx-cluster"
+  location = "us-central1"
+
+  node_pool {
+    name       = "default-pool"
+    initial_node_count = 1
+    machine_type = "n1-standard-1"
+  }
+}
+
+resource "google_container_node_pool" "node_pool" {
+  name     = "nginx-node-pool"
+  location = "us-central1"
+  cluster  = google_container_cluster.cluster.name
+
+  node_config {
+    machine_type = "n1-standard-1"
+  }
+}
+
+
+
+2) Devops spring pet clinic dockerfile creation
+       git clone https://github.com/spring-projects/spring-petclinic.git
+       cd spring-petclinic
+       ./mvnw package
+       java -jar target/*.jar
+
+# Use official OpenJDK image as base image
+FROM openjdk:11-jre-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the JAR file into the container
+COPY target/*.jar app.jar
+
+# Expose the port that the application will run on
+EXPOSE 8080
+
+# Command to run the application
+CMD ["java", "-jar", "app.jar"]
+
+
+3) Write a Code to fetch latest artifact > Image100
+#!/bin/bash
+
+# Maven Repository URL
+MAVEN_REPO="https://repo.maven.apache.org/maven2"
+
+# Group ID, Artifact ID, and Packaging of the artifact
+GROUP_ID="org.springframework.samples"
+ARTIFACT_ID="spring-petclinic"
+PACKAGING="jar"
+
+# Get the latest version from Maven metadata
+VERSION=$(curl -s "$MAVEN_REPO/$GROUP_ID/$ARTIFACT_ID/maven-metadata.xml" | grep -oPm1 "(?<=<latest>)[^<]+")
+
+# Download the latest artifact
+ARTIFACT_URL="$MAVEN_REPO/$GROUP_ID/$ARTIFACT_ID/$VERSION/$ARTIFACT_ID-$VERSION.$PACKAGING"
+OUTPUT_FILE="$ARTIFACT_ID-$VERSION.$PACKAGING"
+
+echo "Fetching the latest version: $VERSION"
+echo "Downloading $ARTIFACT_ID-$VERSION.$PACKAGING from $ARTIFACT_URL"
+
+curl -O "$ARTIFACT_URL"
+
+echo "Artifact downloaded as $OUTPUT_FILE"
+
+
+
+4) Write Code to delete last 30 days data from artifact  > Image1-Image70
+
+import requests
+from datetime import datetime, timedelta
+
+def delete_artifacts(repository_owner, repository_name, token, days_to_keep):
+    base_url = f"https://api.github.com/repos/{repository_owner}/{repository_name}/actions/artifacts"
+
+    headers = {
+        "Accept": "application/vnd.github.v3+json",
+        "Authorization": f"Bearer {token}",
+    }
+
+    response = requests.get(base_url, headers=headers)
+
+    if response.status_code == 200:
+        artifacts = response.json()["artifacts"]
+        cutoff_date = datetime.now() - timedelta(days=days_to_keep)
+
+        for artifact in artifacts:
+            created_at = datetime.strptime(artifact["created_at"], "%Y-%m-%dT%H:%M:%SZ")
+
+            if created_at < cutoff_date:
+                artifact_id = artifact["id"]
+                delete_url = f"{base_url}/{artifact_id}"
+                delete_response = requests.delete(delete_url, headers=headers)
+
+                if delete_response.status_code == 204:
+                    print(f"Artifact {artifact_id} deleted successfully.")
+                else:
+                    print(f"Failed to delete artifact {artifact_id}. Status code: {delete_response.status_code}")
+            else:
+                print(f"Artifact {artifact['id']} is within the specified date range. Not deleting.")
+
+    else:
+        print(f"Failed to fetch artifacts. Status code: {response.status_code}")
+
+# Replace with your repository details and personal access token
+repository_owner = "your_username"
+repository_name = "your_repository"
+token = "your_personal_access_token"
+days_to_keep = 30
+
+delete_artifacts(repository_owner, repository_name, token, days_to_keep)
+
+
+5) write Jenkins file to deploy spring pet clinic
+pipeline {
+    agent any
+
+    environment {
+        MAVEN_HOME = tool 'Maven'
+        PATH = "${env.PATH}:${MAVEN_HOME}/bin"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    sh "./mvnw clean package"
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Assuming you have Docker installed on the Jenkins machine
+                    docker.image('openjdk:11-jre-slim').inside {
+                        // Build Docker image
+                        sh "docker build -t spring-petclinic ."
+
+                        // Run Docker container
+                        sh "docker run -p 8080:8080 spring-petclinic"
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
+    }
+}
+
+
+6) Write create presentation for Devops
+
+7) Write a Devops Blog in 10000 words
+
+8) Desktop Application to upload data to S3
+
+9) Desktop Application to upload data to GIT
+
+10) Creating calculator Application.
+
+11) Create voting application between devops, cloud and other technology.
+
+12) terraform code for spring petclinc deployment into Ec2 server
+
+https://myawsbucketfordevopswork.s3.us-east-2.amazonaws.com/voting.html
+
+Why there is a recesion in IT industry or why people are losing the job? Because enhancement in IT technologies, and people are not upto date.
+
+>Concept vs techonlogy
+    for loop
+
+*****VIMP***** 
+
+1) Don't try to become master, because you will never become master. || Master means you will not fail, but all these rock start are failing.
+
+2) Just start and take help from google/chatgpt.
+
+3) Making notes is good, but please see them also. try to have google/chat GPT for all solutions.
+                 
+
+Football> 
+Leaone meshi  Very low skill player
+Pele
+Ronaldo
+nyanmar
+
+>Devops Principles
+1) Respect Ops
+2) Respect Dev
+3) Same process for all
+4) Continious deployment
+5) IAC
+
+>Devops Certificate roadmap
+   > what all certificate I need to do,
+   > How to present the certificate in resume
+
+>Devops future learning roadmap
+
+
+
+>Devops learning portal
+
+
+https://github.com/JanbaskDevops/Interview_questions
+https://github.com/JanbaskDevops/studyMatarial
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
